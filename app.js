@@ -33,8 +33,10 @@ const updateTask = (id, title) => {
   const tasks = getTasks();
   const task = tasks.find((task) => task.id === parseInt(id));
   if (task) {
-    task.status = "done";
-    saveTasks(tasks);
+    let newTasks = tasks.filter((task) => task.id !== parseInt(id));
+    task.title = title;
+    newTasks.push(task);
+    saveTasks(newTasks);
     console.log(`task with the title: ${title} is updated`);
   } else {
     console.log("task not found");
@@ -84,6 +86,10 @@ const listTasksByStatus = (status) => {
   console.log(tasksByStatus);
 };
 
+const listAllTasks = () => {
+  const tasks = getTasks();
+  console.log(tasks);
+};
 // CLI commands for methods
 const [, , command, arg1, arg2] = process.argv;
 
@@ -107,6 +113,8 @@ switch (command) {
   case "listbystatus":
     listTasksByStatus(arg1);
     break;
+  case "list":
+    listAllTasks();
   default:
     console.log("command not found");
     break;
