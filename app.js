@@ -67,3 +67,44 @@ const changeTaskStatus = (id,status) => {
     }
 }
 
+const listUndoneTasks = () => {
+    const tasks = getTasks();
+    const undoneTasks = tasks.filter((task) => task.status === "not done");
+    console.log(undoneTasks);
+};
+
+
+const listTasksByStatus = (status) => {
+    const tasks = getTasks();
+    const tasksByStatus = tasks.filter((task) => task.status === status);
+    console.log(tasksByStatus);
+}
+
+// CLI commands for methods
+
+
+// switch case with commands
+switch (command) {
+    case 'add':
+        addTask(arg1);
+        break;
+    case 'update':
+        updateTask(arg1,arg2);
+        break;
+    case 'delete':
+        deleteTask(arg1);
+        break;
+    case 'progress':
+        changeTaskStatus(arg1,arg2);
+        break;
+    case 'notdone':
+        listUndoneTasks();
+        break;
+    case 'listbystatus':
+        listTasksByStatus(arg1);
+        break;
+    default:
+        console.log("command not found");
+        break;
+
+}
