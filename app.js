@@ -7,27 +7,27 @@ if (!fs.existsSync(path)) {
 }
 
 const getTasks = () => {
-  JSON.parse(fs.readFileSync(path));
+  return JSON.parse(fs.readFileSync(path,"utf-8"));
 };
 
 const saveTasks = (tasks) => {
-  JSON.parse(fs.writeFileSync(path, JSON.stringify(tasks)));
+  fs.writeFileSync(path, JSON.stringify(tasks));
 };
 
 // Helper function to generate a unique ID
 const generateId = (tasks) => {
-  if (tasks.length === 0) return 1; // Start from 1 if no tasks
+  if (tasks.length === 0) return 1; 
   const maxId = Math.max(...tasks.map(task => task.id));
   return maxId + 1;
 };
 
 const addTask = (title) => {
-    const tasks = getTasks();
-    taskid=generateId(tasks);
-    tasks.push({id:taskid, title, status: "not done" });
-    saveTasks(tasks);
-    console.log(`task added with the title: ${title}`);
-}
+  const tasks = getTasks(); 
+  const taskId = generateId(tasks);
+  tasks.push({ id: taskId, title, status: "not done" });
+  saveTasks(tasks); 
+  console.log(`Task added with title: ${title}`);
+};
 
 const updateTask = (id,title) => {
     const tasks = getTasks();
@@ -81,7 +81,7 @@ const listTasksByStatus = (status) => {
 }
 
 // CLI commands for methods
-
+const [, , command, arg1, arg2] = process.argv;
 
 // switch case with commands
 switch (command) {
